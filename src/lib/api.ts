@@ -1,6 +1,7 @@
 /**
  * API service for Emerging Markets Bloom
  */
+import { API_CONFIG, getApiUrl } from './config';
 
 interface SubscriberData {
   fname: string;
@@ -25,26 +26,18 @@ interface SubscriberResponse {
  * @param data Subscriber data
  * @returns Promise with the API response
  */
-/**
- * Add a new subscriber to the newsletter
- * @param data Subscriber data
- * @returns Promise with the API response
- */
 export const addSubscriber = async (data: SubscriberData): Promise<SubscriberResponse> => {
   try {
-    // Use Vite's built-in proxy server to avoid CORS issues
-    // This will be proxied to http://192.241.137.126:8841/EMC/addSubscriber
-    const proxyUrl = '/EMC/v2/addSubscriber';
+    // Get the API endpoint URL from configuration
+    const apiUrl = getApiUrl(API_CONFIG.endpoints.addSubscriber);
     
-    console.log('Sending subscriber data (flat):', data);
+    console.log('Sending subscriber data:', data);
+    console.log('Using API URL:', apiUrl);
     
-    // Using fetch API with the Vite proxy
-    const response = await fetch(proxyUrl, {
+    // Using fetch API with the configured URL
+    const response = await fetch(apiUrl, {
       method: 'POST',
-      headers: {
-        'X-Custom-Header': 'vader',
-        'Content-Type': 'application/json'
-      },
+      headers: API_CONFIG.headers,
       // Backend expects a flat JSON object: { fname, lname, email, password }
       body: JSON.stringify({
         fname: data.fname,
