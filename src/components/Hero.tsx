@@ -29,7 +29,7 @@ const Hero = () => {
           fname: firstName,
           lname: lastName,
           email: email,
-          password: ''
+          password: 'test'
         }
       });
       

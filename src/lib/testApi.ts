@@ -16,7 +16,7 @@ const testApiConnection = async () => {
         fname: 'Test',
         lname: 'User',
         email: 'test@example.com',
-        password: ''
+        password: 'test'
       }
     };
     

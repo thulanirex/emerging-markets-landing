@@ -86,7 +86,7 @@ const Newsletter = () => {
                     fname: firstName,
                     lname: lastName,
                     email: email,
-                    password: ''
+                    password: 'test'
                   }
                 });
                 
