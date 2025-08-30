@@ -12,10 +12,12 @@ const testApiConnection = async () => {
     console.log('Testing API connection...');
     
     const testData = {
-      fname: 'Test',
-      lname: 'User',
-      email: 'test@example.com',
-      password: ''
+      users: {
+        fname: 'Test',
+        lname: 'User',
+        email: 'test@example.com',
+        password: ''
+      }
     };
     
     console.log('Sending test data:', testData);

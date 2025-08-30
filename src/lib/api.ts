@@ -3,11 +3,15 @@
  */
 import { API_CONFIG, getApiUrl } from './config';
 
-interface SubscriberData {
+interface UserData {
   fname: string;
   lname: string;
   email: string;
   password: string;
+}
+
+interface SubscriberData {
+  users: UserData;
 }
 
 interface SubscriberResponse {
@@ -38,13 +42,8 @@ export const addSubscriber = async (data: SubscriberData): Promise<SubscriberRes
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: API_CONFIG.headers,
-      // Backend expects a flat JSON object: { fname, lname, email, password }
-      body: JSON.stringify({
-        fname: data.fname,
-        lname: data.lname,
-        email: data.email,
-        password: data.password,
-      })
+      // Send the data as received from the components
+      body: JSON.stringify(data)
     });
     
     if (!response.ok) {
