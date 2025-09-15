@@ -10,9 +10,8 @@ interface UserData {
   password: string;
 }
 
-interface SubscriberData {
-  users: UserData;
-}
+// Support both the original nested shape and a flat payload
+type SubscriberData = { users: UserData } | UserData;
 
 interface SubscriberResponse {
   statusCode: number;
@@ -35,15 +34,20 @@ export const addSubscriber = async (data: SubscriberData): Promise<SubscriberRes
     // Get the API endpoint URL from configuration
     const apiUrl = getApiUrl(API_CONFIG.endpoints.addSubscriber);
     
-    console.log('Sending subscriber data:', data);
+    // Normalize payload to the flat structure expected by backend
+    const payload: UserData = (data as any).users ? (data as any).users as UserData : data as UserData;
     console.log('Using API URL:', apiUrl);
+    console.log('Normalized payload:', payload);
     
     // Using fetch API with the configured URL
     const response = await fetch(apiUrl, {
       method: 'POST',
-      headers: API_CONFIG.headers,
-      // Send the data as received from the components
-      body: JSON.stringify(data)
+      headers: {
+        'Content-Type': 'application/json',
+        ...API_CONFIG.headers,
+      },
+      // Always send the flat payload
+      body: JSON.stringify(payload)
     });
     
     if (!response.ok) {

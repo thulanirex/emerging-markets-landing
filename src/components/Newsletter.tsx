@@ -81,14 +81,14 @@ const Newsletter = () => {
               
               setIsSubmitting(true);
               try {
-                const response = await addSubscriber({
-                  users: {
-                    fname: firstName,
-                    lname: lastName,
-                    email: email,
-                    password: 'test'
-                  }
-                });
+                const payload = {
+                  fname: firstName,
+                  lname: lastName,
+                  email: email,
+                  password: 'test'
+                };
+                console.log('Submitting payload:', payload);
+                const response = await addSubscriber(payload);
                 
                 toast({
                   title: 'Success!',
